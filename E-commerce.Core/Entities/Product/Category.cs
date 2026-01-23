@@ -1,0 +1,9 @@
+﻿namespace E_commerce.Core.Entities
+{
+	public class Category : BaseEntity<int>
+	{
+		public string Name { get; set; } = string.Empty;
+		public string Description { get; set; } = string.Empty;
+		public ICollection<Category> Categories { get; set;} = new HashSet<Category>();
+	}
+}
