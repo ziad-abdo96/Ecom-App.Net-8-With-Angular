@@ -1,5 +1,6 @@
 
 using E_commerce.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace E_commerce.API
 {
@@ -16,6 +17,7 @@ namespace E_commerce.API
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 			builder.Services.infrastructureConfiguration(builder.Configuration);
+			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 			var app = builder.Build();
 

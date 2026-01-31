@@ -4,6 +4,6 @@
 	{
 		public string ImageName { get; set; } = string.Empty;
 		public int ProductId { get; set; }
-		public virtual Product Product { get; set; } = new Product();
+		//public virtual Product Product { get; set; } = new Product();
 	}
 }

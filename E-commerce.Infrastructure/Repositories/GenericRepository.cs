@@ -42,7 +42,7 @@ namespace E_commerce.Infrastructure.Repositories
 		}
 		public async Task<T> GetByIdAsync(int id)
 		{
-			var entity = await _context.Set<T>().FindAsync();
+			var entity = await _context.Set<T>().FindAsync(id);
 			return entity;
 		}
 		public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
@@ -52,7 +52,7 @@ namespace E_commerce.Infrastructure.Repositories
 			{
 				query = query.Include(item);
 			}
-			 var entity = await query.FirstOrDefaultAsync(x => EF.Property<int>(x, "id") == id);
+			 var entity = await query.FirstOrDefaultAsync(x => EF.Property<int>(x, "Id") == id);
 			return entity;
 		}
 
