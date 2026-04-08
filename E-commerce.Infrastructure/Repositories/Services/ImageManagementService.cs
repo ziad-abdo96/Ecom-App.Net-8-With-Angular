@@ -26,14 +26,14 @@ namespace E_commerce.Infrastructure.Repositories.Services
 			{
 				if(file.Length > 0)
 				{
-					var imageName = file.Name;
+					var imageName = file.FileName;
 					var imageSrc = $"Images/{src}/{imageName}";
 					var root = Path.Combine(imageDirectory, imageName);
 					using(FileStream stream = new FileStream(root, FileMode.Create))
 					{
 						await file.CopyToAsync(stream);
 					}
-					saveImageSrc.Add(imageName);
+					saveImageSrc.Add(imageSrc);
 				}
 			}
 

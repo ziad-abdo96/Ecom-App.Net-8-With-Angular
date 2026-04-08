@@ -2,6 +2,7 @@
 using E_commerce.API.Helper;
 using E_commerce.Core.DTO;
 using E_commerce.Core.Interfaces;
+using E_commerce.Core.Sharing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_commerce.API.Controllers
@@ -14,20 +15,14 @@ namespace E_commerce.API.Controllers
 		}
 
 		[HttpGet("get-all")]
-		public async Task<IActionResult> Get()
+		public async Task<IActionResult> Get([FromQuery] ProductParams productParams)
 		{
 			try
 			{
 				var products = await _work.ProductRepository
-					.GetAllAsync(x => x.Category, x => x.Photos);
-
-				var result = _mapper.Map<List<ProductDTO>>(products);
-				if (products is null)
-				{
-					return BadRequest(new ResponseAPI(400));
-				}
-
-				return Ok(result);
+					.GetAllAsync(productParams);
+				
+				return Ok(new Pagination<ProductDTO>(productParams.PageNumber, productParams.MaxPageSize, products.TotalCount,  products.Products));
 			}
 			catch (Exception ex)
 			{
@@ -76,6 +71,22 @@ namespace E_commerce.API.Controllers
 			{
 				await _work.ProductRepository.UpdateAsync(productDTO);
 				return Ok(new ResponseAPI(200, "product is updated succefully"));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(new ResponseAPI(400, ex.Message));
+			}
+		}
+
+		[HttpDelete("delete-product/{id}")]
+		public async Task<IActionResult> Delete(int id)
+		{
+			try
+			{
+				var product = await _work.ProductRepository
+					.GetByIdAsync(id, p => p.Photos, p => p.Category);
+				await _work.ProductRepository.DeleteAsync(product);
+				return Ok(new ResponseAPI(200, "product is deleted succefully"));
 			}
 			catch (Exception ex)
 			{

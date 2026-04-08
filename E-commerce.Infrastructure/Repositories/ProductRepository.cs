@@ -1,9 +1,10 @@
-﻿using E_commerce.Core.DTO;
+﻿using AutoMapper;
+using E_commerce.Core.DTO;
 using E_commerce.Core.Entities;
 using E_commerce.Core.Interfaces;
-using AutoMapper;
-using E_commerce.Infrastructure.Data;
 using E_commerce.Core.Services;
+using E_commerce.Core.Sharing;
+using E_commerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce.Infrastructure.Repositories
@@ -19,6 +20,52 @@ namespace E_commerce.Infrastructure.Repositories
 			_mapper = mapper;
 			_imageManagmentService = imageManagmentService;
 		}
+
+		public async Task<ProductsWithCountDTO> GetAllAsync(ProductParams productParams)
+		{
+			var query = _context.products
+				.Include(p => p.Category)
+				.Include(p => p.Photos)
+				.AsNoTracking();
+			if (!string.IsNullOrWhiteSpace(productParams.Search))
+			{
+				var searchWords = productParams.Search.ToLower().Split(' ');
+
+				query = query.Where(p =>
+					searchWords.All(word =>
+						p.Name.ToLower().Contains(word) ||
+						p.Description.ToLower().Contains(word)
+					)
+				);
+			}
+
+
+			if (productParams.CategoryId.HasValue)
+				query = query.Where(p => p.CategoryId == productParams.CategoryId);
+
+			if (!string.IsNullOrWhiteSpace(productParams.Sort))
+			{
+				query = productParams.Sort switch
+				{
+					"PriceAce" => query.OrderBy(p => p.NewPrice),
+					"PriceDesc" => query.OrderByDescending(p => p.NewPrice),
+					_ => query.OrderBy(p => p.Name),
+				};
+			}
+
+			ProductsWithCountDTO productsWithCountDTO = new ProductsWithCountDTO();
+			productsWithCountDTO.TotalCount = query.Count();
+
+			query = query.Skip(productParams.PageSize * (productParams.PageNumber - 1)).Take(productParams.PageSize);
+			
+
+
+			productsWithCountDTO.Products = _mapper.Map<List<ProductDTO>>(query);
+
+			return productsWithCountDTO;
+		}
+
+
 
 		public async Task<bool> AddAsync(AddProductDTO productDTO)
 		{
@@ -39,6 +86,7 @@ namespace E_commerce.Infrastructure.Repositories
 			await _context.SaveChangesAsync();
 			return true;
 		}
+
 
 		public async Task<bool> UpdateAsync(UpdateProductDTO productDTO)
 		{
@@ -75,5 +123,18 @@ namespace E_commerce.Infrastructure.Repositories
 			return true;
 			
 		}
+
+		public async Task DeleteAsync(Product product)
+		{
+			var photo = await _context.Photos
+				.Where(ph => ph.ProductId == product.Id).ToListAsync();
+			foreach(var item in photo)
+			{
+				_imageManagmentService.DeleteImageAsync(item.ImageName);
+			}
+			_context.products.Remove(product);
+			await _context.SaveChangesAsync();
+		}
+
 	}
 }
