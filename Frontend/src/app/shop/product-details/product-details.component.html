@@ -1,0 +1,99 @@
+<div class="container-lg py-5">
+
+    <div class="card border-0 shadow rounded-4 p-4">
+        <div class="row g-4 align-items-start">
+
+            <!-- Images -->
+            <div class="col-lg-4">
+
+                <img
+                    [src]="baseUrlForImages + mainImage"
+                    class="img-fluid w-100 rounded"
+                    style="height:400px; object-fit:cover;" />
+
+                <div class="d-flex gap-2 mt-3">
+                    @for (item of product.photos; track $index) {
+                    <img
+                       
+                        [src]="baseUrlForImages + item.imageName"
+                        class="img-fluid rounded border"
+                        (click)="ReplaceImage(item.imageName)"
+                        style="width:90px; height:90px; object-fit:cover; cursor:pointer;" />
+                    }    
+                </div>
+
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-lg-8">
+
+                <span class="badge bg-warning text-dark mb-3 px-3 py-2">
+                    Category: {{ product.categoryName }}
+                </span>
+
+                <!-- <h3 class="fw-bold mb-3">Black Dress for Women</h3> -->
+
+                <!-- Price -->
+                <div class="mb-4">
+                    <h4 class="fw-bold text-warning mb-1">{{
+                        product.newPrice|currency}}</h4>
+                    <span class="text-muted">
+                        <del>{{ product.oldPrice|currency }}</del>
+                        <span class="text-danger ms-2">({{ CalculateDiscount(product.oldPrice, product.newPrice) }}% OFF)</span>
+                    </span>
+
+                    <div>
+                        <p class="text-danger">quantity : {{ quantity }}</p>
+                        <button (click)="DecrementBasket()" class="btn btn-danger text-white">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        &nbsp;
+                        <button (click)="IncrementBasket()" class="btn btn-dark text-white">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+                <p class="text-muted mb-4">
+                    {{ product.description }}
+                </p>
+
+                <div class="d-flex flex-wrap align-items-center gap-3">
+
+                    <input type="number"
+                        class="form-control w-auto rounded-3"
+                        value="1"
+                        min="1">
+
+                    <button (click)="AddToBasket()" class="btn btn-warning rounded-3 px-4">
+                        <i class="fa fa-shopping-cart"></i>
+                        Add To Cart
+                    </button>
+
+                    <button class="btn btn-outline-dark rounded-3 px-4">
+                        <i class="fa fa-heart"></i>
+                        Wishlist
+                    </button>
+
+                    <button routerLink="/Shop" class="btn btn-outline-dark rounded-4 px-4">
+                        <i class="fa fa-shopping-bag"></i>
+                        Shopping
+                    </button>
+
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded-4">
+                    <p class="mb-1 fw-semibold">
+                        Delivery within 3 days
+                    </p>
+                    <p class="text-muted small mb-0">
+                        Fast and secure shipping.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

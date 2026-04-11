@@ -1,0 +1,90 @@
+<div class="container py-4">
+  <div class="row g-4">
+
+    <!-- Sidebar -->
+    <section class="col-xl-3 col-lg-3 col-md-4">
+      <div class="card shadow-sm border-0 rounded-4">
+
+        <!-- Sorting -->
+        <div class="card-body border-bottom">
+          <h6 class="fw-bold mb-3">Sorting</h6>
+          <select #SortSelect class="form-select form-select-sm" (change)="SortingByPrice($event)">
+            <option >Sort by...</option>
+            @for (item of SortingOptions; track $index) {
+              <option [value]="item.value">{{ item.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Categories -->
+        <div class="card-body border-bottom">
+          <h6 class="fw-bold mb-3">Categories</h6>
+          <div class="list-group list-group-flush">
+            @for(item of category; track $index) {
+              <a href="#"
+                [class.active]="item.id === productParam.categoryId"
+                 (click)="SelectedId(item.id); $event.preventDefault()"
+                 class="list-group-item list-group-item-action border-0 ps-0">
+                {{ item.name }}
+              </a>
+            }
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">Price Range</h6>
+          <label class="form-label small">
+            Max Price: <strong>maxPrice</strong>
+          </label>
+          <input type="range"
+                 class="form-range"
+                 min="0"
+                 max="2000"
+                >
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="col-xl-9 col-lg-9 col-md-8">
+
+      <!-- Header -->
+      <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <h4 class="fw-bold mb-0">Shopping</h4>
+
+          <div class="input-group input-group-sm w-auto">
+            <input #search type="text"
+                   class="form-control"
+                   placeholder="Search products..."
+                   (keyup)="OnSearch(search.value)">
+            <button class="btn btn-warning">Search</button>
+            <button (click)="ResetValue()" class="btn btn-dark">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="row g-4">
+        @for (item of product; track $index) {
+          <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+            <app-shop-item [product]="item"></app-shop-item>
+          </div>
+        }
+      </div>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-center align-items-center mt-5">
+        <app-pagination
+        [pageSize]="productParam.pageSize" 
+        [totalCount]="totalCount"
+        (changePaged)="OnchangePage($event)">
+        </app-pagination>
+      </div>
+
+    </section>
+
+  </div>
+</div>

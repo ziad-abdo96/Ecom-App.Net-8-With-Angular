@@ -1,0 +1,98 @@
+<section class="pt-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-5">
+        <div class="card border rounded-3 shadow-sm">
+          <div class="card-body p-4">
+
+            <div class="text-center mb-4">
+              <div
+                class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3"
+                style="width:52px; height:52px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                  stroke="#185FA5" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <h2 class="h5 fw-medium mb-1">User Registration</h2>
+              <p class="text-muted small mb-0">Fill in your details to get
+                started</p>
+            </div>
+
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+              <div class="mb-3">
+                <label for="userName" class="form-label small fw-medium">User
+                  Name</label>
+                <input formControlName="UserName" type="text" id="userName"
+                  class="form-control"
+                  placeholder="Enter username"
+                  [class.is-valid]="_UserName.valid && _UserName.touched"
+                  [class.is-invalid]="_UserName.invalid && _UserName.touched">
+                <div class="invalid-feedback">
+                  User Name is required and must be at least 3 characters long.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="displayName"
+                  class="form-label small fw-medium">Display Name</label>
+                <input formControlName="DisplayName" type="text"
+                  id="displayName"
+                  class="form-control"
+                  placeholder="Enter display name"
+                  [class.is-valid]="_DisplayName.valid && _DisplayName.touched"
+                  [class.is-invalid]="_DisplayName.invalid && _DisplayName.touched">
+                <div class="invalid-feedback">
+                  Display Name is required.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label small fw-medium">Email
+                  Address</label>
+                <input formControlName="Email" type="email" id="email"
+                  class="form-control"
+                  placeholder="Enter email"
+                  [class.is-valid]="_email.valid && _email.touched"
+                  [class.is-invalid]="_email.invalid && _email.touched">
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="password"
+                  class="form-label small fw-medium">Password</label>
+                <input formControlName="Password" type="password" id="password"
+                  class="form-control"
+                  placeholder="Min 6 characters"
+                  [class.is-valid]="_password.valid && _password.touched"
+                  [class.is-invalid]="_password.invalid && _password.touched">
+                <div class="invalid-feedback">
+                  Password must be at least 6 characters, contain a capital
+                  letter and a number.
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary"
+                  >
+                  Register
+                </button>
+              </div>
+
+              <p class="text-center text-muted small mt-3 mb-0">
+                Already have an account? <a routerLink="/account/login"
+                  class="text-primary text-decoration-none">Sign in</a>
+              </p>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

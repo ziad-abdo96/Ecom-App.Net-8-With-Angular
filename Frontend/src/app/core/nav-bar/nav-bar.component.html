@@ -1,0 +1,181 @@
+<nav
+  class="navbar navbar-expand-lg navbar-dark bg-dark shadow sticky-top border-bottom border-secondary">
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <a routerLink="/"
+      class="navbar-brand fw-bold d-flex align-items-center gap-2 text-decoration-none">
+      <img src="favicon.ico" width="40" height="40" alt="E-Commerce Logo"
+        loading="lazy" class="rounded-circle">
+      <span class="d-none d-sm-inline fs-5 text-white">E-Commerce</span>
+    </a>
+
+    <!-- Toggle Button -->
+    <button class="navbar-toggler border-0" type="button"
+      data-bs-toggle="collapse" data-bs-target="#navbar"
+      aria-controls="navbar" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbar">
+
+      <!-- Navigation Links -->
+      <ul class="navbar-nav mx-auto gap-lg-3">
+        <li class="nav-item">
+
+          <a routerLink="/"
+            #rla="routerLinkActive"
+            routerLinkActive
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="nav-link fw-500 text-white position-relative">
+
+            Home
+
+            @if (rla.isActive) {
+            <span
+              class="position-absolute bottom-0 start-50 translate-middle-x bg-warning"
+              style="width: 25px; height: 3px; border-radius: 2px;"></span>
+            }
+
+          </a>
+          <li class="nav-item">
+            <a routerLink="/shop"
+              #rlaShop="routerLinkActive"
+              routerLinkActive
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="nav-link fw-500 text-white position-relative">
+
+              Shop
+
+              @if (rlaShop.isActive) {
+              <span
+                class="position-absolute bottom-0 start-50 translate-middle-x bg-warning"
+                style="width: 25px; height: 3px; border-radius: 2px;">
+              </span>
+              }
+
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a routerLink="/best-seller"
+              class="nav-link fw-500 opacity-75 text-white">Best Seller</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/about"
+              class="nav-link fw-500 opacity-75 text-white">About</a>
+          </li>
+        </ul>
+
+        <!-- Search Bar -->
+        <form class="d-none d-lg-flex me-3" action="/search" method="get"
+          role="search">
+          <div class="input-group input-group-sm">
+            <input
+              class="form-control border-0 rounded-start-pill bg-light text-dark"
+              type="search"
+              name="q"
+              placeholder="Search..."
+              autocomplete="off"
+              aria-label="Search products">
+            <button class="btn btn-warning border-0 rounded-end-pill fw-500"
+              type="submit" aria-label="Search button">
+              <span class="material-icons"
+                style="font-size: 18px;">search</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Icons Section -->
+        <ul class="navbar-nav align-items-center gap-3">
+
+          <!-- Cart Icon -->
+          <li class="nav-item position-relative">
+            <a routerLink="/basket" class="nav-link opacity-75 text-white"
+              aria-label="Shopping cart">
+              <span class="material-icons"
+                style="font-size: 24px;">shopping_cart</span>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ count }}</span>
+            </a>
+          </li>
+
+          <!-- Wishlist Icon -->
+          <li class="nav-item position-relative d-none d-lg-block">
+            <a href="/wishlist" class="nav-link opacity-75 text-white"
+              aria-label="Wishlist">
+              <span class="material-icons"
+                style="font-size: 24px;">favorite_border</span>
+            </a>
+          </li>
+
+          <!-- Notifications Icon -->
+          <li class="nav-item position-relative d-none d-lg-block">
+            <a href="#" class="nav-link opacity-75 text-white"
+              aria-label="Notifications" data-bs-toggle="dropdown">
+              <span class="material-icons"
+                style="font-size: 24px;">notifications</span>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">1</span>
+            </a>
+          </li>
+
+          <!-- Account Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#"
+              id="accountDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false"
+              aria-label="Account menu">
+              <span class="material-icons"
+                style="font-size: 24px;">account_circle</span>
+            </a>
+
+            <ul
+              class="dropdown-menu dropdown-menu-end shadow-lg rounded-3 border-0 mt-3"
+              aria-labelledby="accountDropdown">
+
+              <li><a class="dropdown-item py-2 px-3" href="/login">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px; color: #0d6efd;">login</span>Login
+                </a></li>
+              <li><a class="dropdown-item py-2 px-3" href="/register">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px; color: #198754;">person_add</span>Register
+                </a></li>
+
+              <li><hr class="dropdown-divider my-2"></li>
+
+              <li><a class="dropdown-item py-2 px-3" href="/my-orders">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px; color: #ffc107;">shopping_bag</span>My
+                  Orders
+                </a></li>
+              <li><a class="dropdown-item py-2 px-3" href="/profile">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px; color: #0dcaf0;">person</span>Profile
+                </a></li>
+              <li><a class="dropdown-item py-2 px-3 d-lg-none" href="/wishlist">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px; color: #dc3545;">favorite</span>Wishlist
+                </a></li>
+              <li><a class="dropdown-item py-2 px-3" href="/settings">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px; color: #6c757d;">settings</span>Settings
+                </a></li>
+
+              <li><hr class="dropdown-divider my-2"></li>
+
+              <li><a class="dropdown-item py-2 px-3 text-danger" href="/logout">
+                  <span class="material-icons align-middle me-2"
+                    style="font-size: 18px;">logout</span>Logout
+                </a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>

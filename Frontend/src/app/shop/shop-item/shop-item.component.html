@@ -1,0 +1,72 @@
+<div class="card h-100 border-0 shadow-sm rounded-4">
+
+  <!-- Image -->
+  <div class="position-relative">
+    <img 
+      [src]="baseUrlForImages + product.photos[0].imageName"
+      class="card-img-top rounded-top-4"
+      style="height: 250px; object-fit: cover;"
+      alt="Product Image">
+
+    <span class="badge bg-danger position-absolute top-0 start-0 m-2">
+      -30%
+    </span>
+  </div>
+
+  <!-- Body -->
+  <div class="card-body d-flex flex-column">
+
+    <!-- Thumbnails -->
+    <div class="d-flex gap-2 mb-3">
+      @for(item of product.photos; track $index) {
+        <img
+          [src]="baseUrlForImages + item.imageName"
+          class="img-thumbnail"
+          style="width:50px;height:50px;object-fit:cover;">
+      }
+    </div>
+
+    <!-- Title -->
+    <h6 class="fw-bold text-dark mb-2 text-truncate">
+      {{ product.name }}
+    </h6>
+
+    <!-- Description -->
+    <p class="text-muted small flex-grow-1">
+      {{ product.description }}
+    </p>
+
+    <!-- Price -->
+    <div class="mb-3">
+      <span class="text-danger text-decoration-line-through small">
+        {{ product.oldPrice | currency }}
+      </span>
+      <span class="fw-bold ms-2">
+        {{ product.newPrice | currency }}
+      </span>
+    </div>
+
+    <!-- Rating -->
+    <div class="text-warning small mb-3">
+      ★★★★☆
+      <span class="text-muted">(125)</span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-grid gap-2">
+      <button (click)="SetBasketValue()" class="btn btn-dark btn-sm">
+        Add to Cart
+      </button>
+
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-danger btn-sm w-100">
+          ❤
+        </button>
+        <button [routerLink]="'/shop/product-details/' + product.id" class="btn btn-outline-secondary btn-sm w-100">
+          Details
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

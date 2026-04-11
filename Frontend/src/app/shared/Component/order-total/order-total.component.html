@@ -1,0 +1,41 @@
+<div class="card shadow-sm">
+    
+    <div class="card-header bg-info text-white text-uppercase text-center">
+        Order Summary
+    </div>
+
+    <div class="card-body">
+        <p class="fst-italic text-muted small">
+            Shipping will be added to the total price
+        </p>
+
+        @if (basketTotals) {
+
+            <ul class="list-group list-group-flush mb-3">
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-muted">Subtotal</span>
+                    <strong>{{ basketTotals.subTotal | currency }}</strong>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span class="text-muted">Shipping</span>
+                    <strong>{{ basketTotals.shipping | currency }}</strong>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between fs-5">
+                    <span class="fw-bold">Total</span>
+                    <span class="fw-bold text-primary">
+                        {{ basketTotals.total | currency }}
+                    </span>
+                </li>
+
+            </ul>
+
+        }
+
+        
+
+    </div>
+
+</div>
